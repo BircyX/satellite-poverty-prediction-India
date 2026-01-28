@@ -75,12 +75,18 @@ For adapting to the India 2015 data, I processed DHS cluster-level wealth indice
 ---
 
 ## Results 
-1. | model     | cv      |   r2_mean |   mae_mean |
-   |:----------|:--------|----------:|-----------:|
-   | Embedding | Random  |  0.64741  |   0.501073 |
-   | Emb+NL    | Random  |  0.647594 |   0.501251 |
-   | Embedding | Spatial |  0.562309 |   0.537825 |
-   | Emb+NL    | Spatial |  0.563835 |   0.536485 |
 
-2. 
+| model     | cv      | r2_mean  | mae_mean |
+|-----------|---------|----------|----------|
+| Embedding | Random  | 0.647410 | 0.501073 |
+| Emb+NL    | Random  | 0.647594 | 0.501251 |
+| Embedding | Spatial | 0.562309 | 0.537825 |
+| Emb+NL    | Spatial | 0.563835 | 0.536485 |
+
+
+<img src="Adaption/Results/Predicted%20Poverty.png" width="500">
+
+<img src="Adaption/Results/Mapping%20across%20models.png" width="500">
+
+Embeddings on their own captured a large share of the variation in DHS wealth, achieving an R² of about 0.65 with Random CV (MAE ≈ 0.50) and still performing well under the stricter Spatial CV setting, where R² remained around 0.56 (MAE ≈ 0.54). Adding VIIRS nightlights gave a modest but consistent boost, especially for spatial generalization, with R² increasing slightly from 0.562 to 0.564 and a small reduction in MAE. Overall, the predicted poverty patterns align well with known regional disparities in India, with higher deprivation concentrated in historically poorer northern and central areas. These results suggest that satellite-derived embeddings, particularly when combined with nightlight information, provide a useful signal for mapping socio-economic conditions at scale.
 
