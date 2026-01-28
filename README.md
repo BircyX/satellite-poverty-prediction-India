@@ -19,14 +19,12 @@ The objective is to predict proverty from satellite imagery:
 2) Extract learned feature embeddings  
 3) Use Ridge regression to predict DHS wealth index  
 4) Produce a poverty prediction map for India
-
 ---
 
 ## Data for the baseline replication
 - Download nightlights data from https://www.ngdc.noaa.gov/eog/viirs/download_dnb_composites.html. Use the 2015 annual composite in the 75N/060W tile and the 00N/060W tile. Choose the .tif file that has "vcm-orm-ntl" in the name. Save them to viirs_2015_<tile_descriptor>.tif, where tile_descriptor is 75N/060W or 00N/060W.
 
 - Get the LSMS survey data from the world bank. Download the 2016-2017 Malawi survey data, 2015-2016 Ethiopia data, and the 2015-2016 Nigeria data from https://microdata.worldbank.org/index.php/catalog/lsms. The World Bank wants to know how people use their data, so you will have to sign in and explain why you want their data. Make sure to download the CSV version. Unzip the downloaded data into countries/<country name>/LSMS/. Country name should be either malawi_2016, ethiopia_2015, or nigeria_2015.
-
 ---
 
 ## Replication 
