@@ -19,14 +19,12 @@ The objective is to predict proverty from satellite imagery:
 2) Extract learned feature embeddings  
 3) Use Ridge regression to predict DHS wealth index  
 4) Produce a poverty prediction map for India
-
 ---
 
 ## Data for the baseline replication
 - Download nightlights data from https://www.ngdc.noaa.gov/eog/viirs/download_dnb_composites.html. Use the 2015 annual composite in the 75N/060W tile and the 00N/060W tile. Choose the .tif file that has "vcm-orm-ntl" in the name. Save them to viirs_2015_<tile_descriptor>.tif, where tile_descriptor is 75N/060W or 00N/060W.
 
 - Get the LSMS survey data from the world bank. Download the 2016-2017 Malawi survey data, 2015-2016 Ethiopia data, and the 2015-2016 Nigeria data from https://microdata.worldbank.org/index.php/catalog/lsms. The World Bank wants to know how people use their data, so you will have to sign in and explain why you want their data. Make sure to download the CSV version. Unzip the downloaded data into countries/<country name>/LSMS/. Country name should be either malawi_2016, ethiopia_2015, or nigeria_2015.
-
 ---
 
 ## Replication 
@@ -75,12 +73,18 @@ For adapting to the India 2015 data, I processed DHS cluster-level wealth indice
 ---
 
 ## Results 
-1. | model     | cv      |   r2_mean |   mae_mean |
-   |:----------|:--------|----------:|-----------:|
-   | Embedding | Random  |  0.64741  |   0.501073 |
-   | Emb+NL    | Random  |  0.647594 |   0.501251 |
-   | Embedding | Spatial |  0.562309 |   0.537825 |
-   | Emb+NL    | Spatial |  0.563835 |   0.536485 |
 
-2. 
+| model     | cv      | r2_mean  | mae_mean |
+|-----------|---------|----------|----------|
+| Embedding | Random  | 0.647410 | 0.501073 |
+| Emb+NL    | Random  | 0.647594 | 0.501251 |
+| Embedding | Spatial | 0.562309 | 0.537825 |
+| Emb+NL    | Spatial | 0.563835 | 0.536485 |
+
+
+<img src="Adaption/Results/Predicted%20Poverty.png" width="500">
+
+<img src="Adaption/Results/Mapping%20across%20models.png" width="500">
+
+Embeddings on their own captured a large share of the variation in DHS wealth, achieving an R² of about 0.65 with Random CV (MAE ≈ 0.50) and still performing well under the stricter Spatial CV setting, where R² remained around 0.56 (MAE ≈ 0.54). Adding VIIRS nightlights gave a modest but consistent boost, especially for spatial generalization, with R² increasing slightly from 0.562 to 0.564 and a small reduction in MAE. Overall, the predicted poverty patterns align well with known regional disparities in India, with higher deprivation concentrated in historically poorer northern and central areas. These results suggest that satellite-derived embeddings, particularly when combined with nightlight information, provide a useful signal for mapping socio-economic conditions at scale.
 
