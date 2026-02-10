@@ -74,15 +74,13 @@ For adapting to the India 2015 data, I processed DHS cluster-level wealth indice
 
 ## Results 
 
-| model     | cv      | r2_mean  | mae_mean |
-|-----------|---------|----------|----------|
-| Embedding | Random  | 0.647410 | 0.501073 |
-| Emb+NL    | Random  | 0.647594 | 0.501251 |
-| Embedding | Spatial | 0.562309 | 0.537825 |
-| Emb+NL    | Spatial | 0.563835 | 0.536485 |
+| model     | cv      |   r2_mean |   mae_mean |
+|:----------|:--------|----------:|-----------:|
+| Embedding | Random  |  0.460579 |   0.633763 |
+| Embedding | Spatial |  0.227704 |   0.722774 |
 
 
-<img src="Adaption/Results/Predicted%20Poverty.png" width="500">
+<img src="Adaption/Results/Predicted%20poverty.png" width="500">
 
 <img src="Adaption/Results/Mapping%20across%20models.png" width="500">
 
