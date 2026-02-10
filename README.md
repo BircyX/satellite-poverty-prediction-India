@@ -54,9 +54,7 @@ Due to data access agreements, users need to independently download data files f
 ## Pipeline Overview
 
 ```text
-Landsat Chips → CNN (ResNet18) → 512-d Embeddings → Ridge Regression → Poverty Map
-                                     +
-                              VIIRS Nightlights
+Landsat Chips → CNN (trained with VIIRS nightlight proxy) → 512-d Embeddings → Ridge Regression → Poverty Map
 ```
 ---
 
@@ -68,7 +66,7 @@ Run the Jupyter files in the following order:
 4. scripts/feature_extract_india_2015.ipynb
 5. scripts/predict_india_2015.ipynb
 
-For adapting to the India 2015 data, I processed DHS cluster-level wealth indices as the prediction target and extracted annual VIIRS nighttime light intensity as an additional economic signal. Using Google Earth Engine, I downloaded cloud-masked Landsat 8 image chips across India and trained a ResNet18 CNN on a simplified wealth classification task. The trained network was then used to extract 512-dimensional visual embeddings aggregated at the DHS cluster level. In the final stage, Ridge regression models were applied to predict wealth using satellite embeddings alone versus embeddings combined with nighttime lights, evaluated under both random and spatial cross-validation. The resulting predictions produce a realistic national-scale poverty map.
+For adapting to the India 2015 data, I used DHS cluster-level wealth as the final prediction target and treated VIIRS nighttime light intensity as a proxy supervision signal to train the CNN. Landsat 8 image chips were downloaded from Google Earth Engine with cloud masking, and a ResNet18 model was trained to predict binned nightlight levels, allowing it to learn visual features related to economic development. After training, the network was used to extract 512 dimensional embeddings for each image, which were then averaged at the DHS cluster level. In the final stage, Ridge regression was applied to predict wealth directly from these learned satellite embeddings, evaluated under both random and spatial cross validation. The resulting predictions generate a plausible poverty map that captures broad regional patterns of development across India.
 
 ---
 
@@ -84,5 +82,4 @@ For adapting to the India 2015 data, I processed DHS cluster-level wealth indice
 
 <img src="Adaption/Results/Mapping%20across%20models.png" width="500">
 
-Embeddings on their own captured a large share of the variation in DHS wealth, achieving an R² of about 0.65 with Random CV (MAE ≈ 0.50) and still performing well under the stricter Spatial CV setting, where R² remained around 0.56 (MAE ≈ 0.54). Adding VIIRS nightlights gave a modest but consistent boost, especially for spatial generalization, with R² increasing slightly from 0.562 to 0.564 and a small reduction in MAE. Overall, the predicted poverty patterns align well with known regional disparities in India, with higher deprivation concentrated in historically poorer northern and central areas. These results suggest that satellite-derived embeddings, particularly when combined with nightlight information, provide a useful signal for mapping socio-economic conditions at scale.
-
+Embeddings on their own explained a reasonable share of the variation in DHS wealth. Under Random CV, the model reached an R² of about 0.46 (MAE ≈ 0.63). When evaluated with the stricter Spatial CV split, performance dropped to an R² of around 0.23 (MAE ≈ 0.72), which suggests that some of the predictive power in the random setting comes from nearby areas looking similar, and that generalizing to new regions is harder. Even so, the spatial results show that the image embeddings still carry useful information related to socio-economic conditions. The predicted poverty patterns broadly match known regional differences across India, with higher deprivation concentrated in parts of the north and central regions. Overall, the results suggest that satellite-based embeddings can provide a meaningful, though moderate, signal for mapping poverty at scale.
