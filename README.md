@@ -66,6 +66,8 @@ Run the Jupyter files in the following order:
 4. scripts/feature_extract_india_2015.ipynb
 5. scripts/predict_india_2015.ipynb
 
+The adaptation aims to address SDG 1 – No Poverty.
+
 For adapting to the India 2015 data, I used DHS cluster-level wealth as the final prediction target and treated VIIRS nighttime light intensity as a proxy supervision signal to train the CNN. Landsat 8 image chips were downloaded from Google Earth Engine with cloud masking, and a ResNet18 model was trained to predict binned nightlight levels, allowing it to learn visual features related to economic development. After training, the network was used to extract 512 dimensional embeddings for each image, which were then averaged at the DHS cluster level. In the final stage, Ridge regression was applied to predict wealth directly from these learned satellite embeddings, evaluated under both random and spatial cross validation. The resulting predictions generate a plausible poverty map that captures broad regional patterns of development across India.
 
 ---
